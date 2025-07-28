@@ -99,4 +99,4 @@ def get_bse_csv(from_date, to_date, category):
 # Run if main
 if __name__ == "__main__":
     print("=== 🧪 Testing Extraction ===")
-    get_bse_csv("24-07-2025", "25-07-2025", "Result")
+    get_bse_csv("27-07-2025", "28-07-2025", "Result")
