@@ -66,7 +66,7 @@ def fetch_announcements(from_date, to_date, category):
 
     return announcements
 
-def monitor_bse(category="Result", polling_minutes=1):
+def monitor_bse(category="Result", polling_minutes=0.4):
     print(f"📡 Starting live BSE monitor for category: {category}")
     today = datetime.now().strftime("%d-%m-%Y")
     filename = f"live_{category.replace(' ', '_')}.csv"
@@ -80,6 +80,7 @@ def monitor_bse(category="Result", polling_minutes=1):
 
     while True:
         print(f"\n⏰ Checking for new announcements at {datetime.now().strftime('%H:%M:%S')}")
+        start_time =time.time()
         new_data = fetch_announcements(today, today, category)
 
         if not new_data:
@@ -108,9 +109,10 @@ def monitor_bse(category="Result", polling_minutes=1):
                 seen_links.update([row['PDF_Link'] for row in new_rows])
             else:
                 print("📭 No new announcements since last check.")
-
+        fetch_time = time.time() - start_time
+        print(f"⏱️ Check completed in {fetch_time:.2f} seconds.")
         print(f"🛌 Sleeping for {polling_minutes} minute(s)...")
         time.sleep(polling_minutes * 60)
 
 if __name__ == "__main__":
-    monitor_bse(category="Result", polling_minutes=1)
+    monitor_bse(category="Result", polling_minutes=0.4)
